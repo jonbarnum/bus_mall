@@ -24,20 +24,12 @@ let renderPics = function () {
         centerImageIndex = Math.floor(Math.random() * allPictures.length);
     }
     while (leftImageIndex === rigthtImageIndex) {
-        rigthtImageIndex = Math.floor(Math.random() * allPictures.length)
+        rigthtImageIndex = Math.floor(Math.random() * allPictures.length);
     }
-    // while (centerImageIndex === leftImageIndex){
-    //     leftImageIndex = Math.floor(Math.random() * allPictures.length);
-    // }
     while (centerImageIndex === rigthtImageIndex) {
         rigthtImageIndex = Math.floor(Math.random() * allPictures.length);
     }
-    // while (rigthtImageIndex === leftImageIndex) {
-    //     leftImageIndex = Math.floor(Math.random() * allPictures.length);
-    // }
-    // while (rigthtImageIndex === centerImageIndex) {
-    //     centerImageIndex = Math.floor(Math.random() * allPictures.length);
-    // }
+
     let left = allPictures[leftImageIndex];
     let center = allPictures[centerImageIndex];
     let right = allPictures[rigthtImageIndex];
@@ -109,8 +101,46 @@ let totalResults = function (){
         el.innerHTML = `${pic.name} Clicks: ${pic.clicks} Shown: ${pic.timesImagesShown} Times Shown`;
         results.append(el);
     })
+    let renderAllPicturesData = function () {
+        let chartEl = document.getElementById('myChart');
+        chartEl.innerHTML = '';
+        let ctx = chartEl.getContext('2d');
+        let labels = [];
+        let clickData = [];
+        let shownData = [];
+        
+        for (let i = 0; i < allPictures.length; i++){
+            labels.push(allPictures[i].name);
+            clickData.push(allPictures[i].clicks);
+            shownData.push(allPictures[i].timesImagesShown);
+        }
+        let pictureChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Number Of Clicks',
+                    data: clickData,
+                    backgroundColor: 'red',
+                    borderColor: 'pink'
+                },{
+                label: 'Number of Times Seen',
+                data: shownData,
+                backgroundColor: 'lightblue',
+                borderColor: 'blue' 
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+    renderAllPicturesData();
 }    
 
-
-
 console.log(allPictures);
+

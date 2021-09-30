@@ -1,6 +1,6 @@
 'use strict';
 
-const allPictures = [];
+let allPictures = [];
 let totalClicker = 0;
 
 let Pic = function (name, url) {
@@ -69,31 +69,35 @@ leftPicEl.addEventListener('click', handleClick);
 centerPicEl.addEventListener('click', handleClick);
 rightPicEl.addEventListener('click', handleClick);
 
-
-new Pic ('bag', 'bag.jpg');
-new Pic ('banana', 'banana.jpg');
-new Pic ('bathroom', 'bathroom.jpg');
-new Pic ('boots', 'boots.jpg');
-new Pic ('breakfast', 'breakfast.jpg');
-new Pic ('bubblegum', 'bubblegum.jpg');
-new Pic ('chair', 'chair.jpg');
-new Pic ('cthulhu', 'cthulhu.jpg');
-new Pic ('dog-duck', 'dog-duck.jpg');
-new Pic ('dragon', 'dragon.jpg');
-new Pic ('pen', 'pen.jpg');
-new Pic ('pet-sweep', 'pet-sweep.jpg');
-new Pic ('scissors', 'scissors.jpg');
-new Pic ('shark', 'shark.jpg');
-new Pic ('sweep', 'sweep.jpg');
-new Pic ('tauntaun', 'tauntaun.jpg');
-new Pic ('unicorn', 'unicorn.jpg');
-new Pic ('water-can', 'water-can.jpg');
-new Pic ('wine-glass', 'wine-glass.jpg');
-
+if (!localStorage.getItem('allProducts')) {
+    new Pic ('bag', 'bag.jpg');
+    new Pic ('banana', 'banana.jpg');
+    new Pic ('bathroom', 'bathroom.jpg');
+    new Pic ('boots', 'boots.jpg');
+    new Pic ('breakfast', 'breakfast.jpg');
+    new Pic ('bubblegum', 'bubblegum.jpg');
+    new Pic ('chair', 'chair.jpg');
+    new Pic ('cthulhu', 'cthulhu.jpg');
+    new Pic ('dog-duck', 'dog-duck.jpg');
+    new Pic ('dragon', 'dragon.jpg');
+    new Pic ('pen', 'pen.jpg');
+    new Pic ('pet-sweep', 'pet-sweep.jpg');
+    new Pic ('scissors', 'scissors.jpg');
+    new Pic ('shark', 'shark.jpg');
+    new Pic ('sweep', 'sweep.jpg');
+    new Pic ('tauntaun', 'tauntaun.jpg');
+    new Pic ('unicorn', 'unicorn.jpg');
+    new Pic ('water-can', 'water-can.jpg');
+    new Pic ('wine-glass', 'wine-glass.jpg');
+} else {
+    allPictures = JSON.parse(localStorage.getItem('allProducts'));
+    console.log(allPictures)
+}
 
 renderPics();
 
 let totalResults = function (){
+    localStorage.setItem('allProducts', JSON.stringify(allPictures));
     const results = document.getElementById('results');
     const mostClicks =  allPictures.sort(function(a,b){return b.clicks - a.clicks});
     mostClicks.forEach(pic => {
